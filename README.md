@@ -75,3 +75,18 @@ to start up an interactive bash session. There may be instances when you want to
 where the `container_name_here` refers not to the name of the *image* but of the *container*. This will have an auto-generated name that is typically something silly and memorable such as `loving_heisenberg`. There are some more details here:
 
 http://askubuntu.com/questions/505506/how-to-get-bash-or-ssh-into-a-running-container-in-background-mode#507009
+
+## What about sending a new job to an existing container when I'm connected over ssh?
+
+You can use docker `exec` but it's a pain to change the working directory. You can do something like this:
+
+            sudo docker exec name_of_container bash -c "cd ~/some/directory/here && SOME OTHER COMMAND"
+
+For more details, see here:
+
+http://stackoverflow.com/questions/28037802/docker-exec-failed-cd-executable-file-not-found-in-path
+
+It seems that if the job you send is long-running, you can control-C and even disconnect your ssh session but the job will keep running. I need to look into this and more generally figure out a better workflow for containers. I think ideally you want your container to persist after a long-running computation so that you can get the results out. Presumably skipping the `rm` flag will do this but I need to read the documentation.
+
+
+
