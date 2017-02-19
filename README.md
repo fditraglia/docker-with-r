@@ -62,4 +62,16 @@ Now check that it worked:
         sudo docker images
         
 If your image is listed you're all set, so go ahead and `exit` from the docker container bash session.
+
+## How can I use this?
+Once you have a docker image set up the way you want it, you can launch it and do work on it. For example:
         
+        sudo docker run -ti --rm my-image-name-here bash
+        
+to start up an interactive bash session. There may be instances when you want to be able to connect to this session from multiple places at once. Say for example, you ran the above on your work machine and started a long-running computation. When at home, you wanted to check the results by using `ssh` to connect to your work machine. Here's how you could subsequently connect to the running docker container:
+
+        sudo docker exec -i -t container_name_here /bin/bash
+        
+where the `container_name_here` refers not to the name of the *image* but of the *container*. This will have an auto-generated name that is typically something silly and memorable such as `loving_heisenberg`. There are some more details here:
+
+http://askubuntu.com/questions/505506/how-to-get-bash-or-ssh-into-a-running-container-in-background-mode#507009
